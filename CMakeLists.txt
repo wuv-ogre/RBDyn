@@ -21,10 +21,12 @@ INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
 INCLUDE(cmake/cpack.cmake)
 INCLUDE(cmake/eigen.cmake)
+INCLUDE(cmake/msvc-specific.cmake)
 
 SET(PROJECT_NAME RBDyn)
 SET(PROJECT_DESCRIPTION "...")
 SET(PROJECT_URL "https://github.com/jorisv/RBDyn")
+SET(PROJECT_DEBUG_POSTFIX "_d")
 
 # Disable -Werror on Unix for now.
 SET(CXX_DISABLE_WERROR True)
@@ -36,7 +38,7 @@ option(UNIT_TESTS "Generate unit tests." ON)
 option(BENCHMARKS "Generate benchmarks." OFF)
 
 if(NOT WIN32)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -std=c++0x -pedantic")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-sign-conversion -std=c++0x -pedantic")
 endif()
 
 #########################
@@ -46,6 +48,12 @@ SEARCH_FOR_EIGEN()
 ADD_REQUIRED_DEPENDENCY("SpaceVecAlg")
 
 #########################
+
+# For MSVC, set local environment variable to enable finding the built dll
+# of the main library when launching ctest with RUN_TESTS
+IF(MSVC)
+  SET(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/src/\$(Configuration)")
+ENDIF(MSVC)
 
 add_subdirectory(src)
 

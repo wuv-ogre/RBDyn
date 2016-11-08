@@ -24,6 +24,14 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/timer/timer.hpp>
+// The inclusion of boost chrono was commented in timer.hpp for boost >= 1.60.
+// Because of this, the auto-link feature does not incude the chrono library
+// anymore, what causes a link error. 
+// (see also https://svn.boost.org/trac/boost/ticket/11862)
+// We add manually the line.
+// Possible alternative: include only for specific version of boost and 
+// auto-link capable compiler
+#include <boost/chrono/chrono.hpp>
 
 // RBDyn
 #include "CoM.h"
@@ -46,7 +54,7 @@ BOOST_AUTO_TEST_CASE(Jacobian)
 	rbd::MultiBodyGraph mbg;
 	std::tie(mb, mbc, mbg) = makeTree30Dof(false);
 
-	rbd::Jacobian jac(mb, mbg.bodyIdByName("LARM6"));
+	rbd::Jacobian jac(mb, "LARM6");
 
 	rbd::forwardKinematics(mb, mbc);
 	rbd::forwardVelocity(mb, mbc);
@@ -71,7 +79,7 @@ BOOST_AUTO_TEST_CASE(BodyJacobian)
 	rbd::MultiBodyGraph mbg;
 	std::tie(mb, mbc, mbg) = makeTree30Dof(false);
 
-	rbd::Jacobian jac(mb, mbg.bodyIdByName("LARM6"));
+	rbd::Jacobian jac(mb, "LARM6");
 
 	rbd::forwardKinematics(mb, mbc);
 	rbd::forwardVelocity(mb, mbc);
@@ -96,7 +104,7 @@ BOOST_AUTO_TEST_CASE(VectorBodyJacobian)
 	rbd::MultiBodyGraph mbg;
 	std::tie(mb, mbc, mbg) = makeTree30Dof(false);
 
-	rbd::Jacobian jac(mb, mbg.bodyIdByName("LARM6"));
+	rbd::Jacobian jac(mb, "LARM6");
 
 	rbd::forwardKinematics(mb, mbc);
 	rbd::forwardVelocity(mb, mbc);
@@ -121,7 +129,7 @@ BOOST_AUTO_TEST_CASE(JacobianDot)
 	rbd::MultiBodyGraph mbg;
 	std::tie(mb, mbc, mbg) = makeTree30Dof(false);
 
-	rbd::Jacobian jac(mb, mbg.bodyIdByName("LARM6"));
+	rbd::Jacobian jac(mb, "LARM6");
 
 	rbd::forwardKinematics(mb, mbc);
 	rbd::forwardVelocity(mb, mbc);
@@ -146,7 +154,7 @@ BOOST_AUTO_TEST_CASE(BodyJacobianDot)
 	rbd::MultiBodyGraph mbg;
 	std::tie(mb, mbc, mbg) = makeTree30Dof(false);
 
-	rbd::Jacobian jac(mb, mbg.bodyIdByName("LARM6"));
+	rbd::Jacobian jac(mb, "LARM6");
 
 	rbd::forwardKinematics(mb, mbc);
 	rbd::forwardVelocity(mb, mbc);
