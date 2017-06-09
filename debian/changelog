@@ -1,3 +1,9 @@
+rbdyn (0.9.2-1trusty1ubuntu2) unstable; urgency=medium
+
+  * Raise upstream version to force upload
+
+ -- Pierre Gergondet <pierre.gergondet+ppa@gmail.com>  Fri, 09 Jun 2017 15:55:42 +0900
+
 rbdyn (0.9.1-1trusty1ubuntu1) unstable; urgency=medium
 
   * Add Python bindings
