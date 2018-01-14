@@ -30,7 +30,7 @@ class MultiBody;
 struct MultiBodyConfig;
 
 /**
-  * Inverse Dynamics algorithm.
+  * Inverse Statics algorithm.
   */
 class RBDYN_DLLAPI InverseStatics
 {
